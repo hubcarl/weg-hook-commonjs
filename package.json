@@ -1,0 +1,21 @@
+{
+  "name": "weg-hook-commonjs",
+  "version": "0.0.1",
+  "description": "weg commonJs module",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hubcarl/weg-hook-commonjs.git"
+  },
+  "keywords": [
+    "fis3",
+    "commonJs",
+    "module"
+  ],
+  "dependencies": {
+    "source-map": "^0.5.3"
+  }
+}
