@@ -47,7 +47,7 @@ module.exports = function(file, opts) {
     }
 
     //var prefix = 'define(\'' + (file.moduleId || file.id) + '\',' + deps + ' function(require, exports, module) {\n\n';
-    var prefix = 'define(\'' + (file.id) + '\',' + deps + ' function(require, exports, module) {\n\n';
+    var prefix = '(typeof define=="function" ? define : function (id, callback) {callback(require, exports, module)})(\'' + (file.id) + '\',' + deps + ' function(require, exports, module) {\n\n';
     //console.log('>>>prefix:' + prefix);
     var affix = '\n\n});\n';
 

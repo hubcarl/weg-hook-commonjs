@@ -17,13 +17,16 @@ module.exports = function(info) {
           break;
 
         case 'require':
-          var info = parseParams(params);
-          var async = info.hasBrackets;
+          if(file.useRequireReplace===false){
 
-          m = 'require(' + (async ? '[' : '') + info.params.map(function(v) {
-            var type = lang[async ? 'jsAsync' : 'jsRequire'];
-            return type.ld + v + type.rd;
-          }).join(',') + (async ? ']' : '');
+          }else{
+            var info = parseParams(params);
+            var async = info.hasBrackets;
+            m = 'require(' + (async ? '[' : '') + info.params.map(function(v) {
+                  var type = lang[async ? 'jsAsync' : 'jsRequire'];
+                  return type.ld + v + type.rd;
+                }).join(',') + (async ? ']' : '');
+          }
           break;
       }
     }
