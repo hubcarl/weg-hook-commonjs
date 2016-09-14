@@ -33,6 +33,28 @@ var entry = module.exports = function(fis, opts) {
     });
     lookup.init(fis, opts);
   });
+
+  // 服务器客户端渲染require问题, fis分析完后,还原require路径为组件名称
+  fis.on('compile:end', function(file){
+    if (file.useCompile && file.useMap && file.isMod) {
+      var _componentDir = fis.get('component.dir');
+      var requires = file.requires||[];
+      var content = file['_content'];
+      if (file.useRequireReplace === false && /module\.exports/.test(content)) {
+        requires.forEach(function (item) {
+          var requirePath = item;
+          var componentDir = _componentDir || path.basename(item, '.js');
+          var componentName = requirePath.replace(componentDir + '/', '').replace('.js', '');
+          var arr = componentName.split('\/');
+          if (arr.length == 2 && arr[0] == arr[1]) {
+            componentName = arr[0];
+          }
+          var reg = new RegExp(item, 'gm');
+          file['_content'] = file['_content'].replace(reg, componentName);
+        });
+      }
+    }
+  });
 };
 
 entry.defaultOptions = {
