@@ -1,6 +1,6 @@
 {
   "name": "weg-hook-commonjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "weg commonJs module",
   "main": "index.js",
   "scripts": {

@@ -4,6 +4,7 @@ var rRequire = /"(?:[^\\"\r\n\f]|\\[\s\S])*"|'(?:[^\\'\n\r\f]|\\[\s\S])*'|(\/\/[
 module.exports = function(info) {
   var content = info.content;
   var file = info.file;
+  file.requireSourcePaths = [];
   info.content = content.replace(rRequire, function(m, comment, type, params) {
     if (type) {
       switch (type) {
@@ -11,12 +12,13 @@ module.exports = function(info) {
           var info = parseParams(params);
 
           m = 'require.async([' + info.params.map(function(v) {
-            var type = lang.jsAsync;
-            return type.ld + v + type.rd;
-          }).join(',') + ']';
+              var type = lang.jsAsync;
+              return type.ld + v + type.rd;
+            }).join(',') + ']';
           break;
 
         case 'require':
+          file.requireSourcePaths.push(params);
           var info = parseParams(params);
           var async = info.hasBrackets;
           m = 'require(' + (async ? '[' : '') + info.params.map(function(v) {
